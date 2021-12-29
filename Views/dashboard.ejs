@@ -1,0 +1,45 @@
+<%- include('_navbar') -%>
+    
+<div style="padding: 2.5% 5%;">
+    <table class="table table-striped" id="history-data">
+        
+        <tr>
+            
+        </tr>
+    </table>
+</div>
+
+<script type="text/javascript">
+    const getSaldoHistory = async () => {
+        let UserData = JSON.parse(getCookie('_lgd_sa'))
+        let GetHistoryData = await fetch('/saldo/history', { headers: { 'Authorization': `Bearer ${ UserData.token }` } })
+        .then(response => response.json()).catch(err => false)
+
+        if ( !GetHistoryData ) {
+            alert('failed to get data history')
+        } else {
+            let HistoryBox = document.querySelector("#history-data")
+            for( let i = 0; i < GetHistoryData.results.length; i++ ) {
+                if ( i < 1 ) {
+                    HistoryBox.innerHTML += `
+                        <tr>
+                            <td>No.</td>
+                            <td>Saldo</td>
+                            <td>Tgl Top Up</td>
+                        </tr>
+                    `
+                }
+
+                HistoryBox.innerHTML += `
+                    <td>${ i + 1 }. </td>
+                    <td>${ GetHistoryData.results[i].saldo }</td>
+                    <td>${ GetHistoryData.results[i].tgl_topup.substring(0, 24) }</td>
+                `
+            }
+        }
+    }
+
+    getSaldoHistory()
+</script>
+
+<%- include('_footer') -%>

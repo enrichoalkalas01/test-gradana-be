@@ -1,0 +1,28 @@
+<script type="text/javascript">
+    let status_login = JSON.parse(getCookie('_lgd_sa'))
+    let show_log_box_out = document.querySelector('#log-status.logged-out')
+    let show_log_box_in = document.querySelector('#log-status.logged-in')
+
+    if ( !status_login ) {
+        show_log_box_out.style.display = 'block'
+        show_log_box_in.style.display = 'none'
+    } else {
+        show_log_box_out.style.display = 'none'
+        show_log_box_in.style.display = 'block'
+
+        if ( window.location.pathname === '/login' ||  window.location.pathname === '/register' ) {
+            window.location.href = '/'
+        }
+
+        console.log(status_login)
+        getSaldo(`${ status_login.token_type } ${ status_login.token }`)
+    }
+
+    function logout() {
+        eraseCookie('_lgd_sa')
+        location.reload()
+    }
+</script>
+
+</body>
+</html>

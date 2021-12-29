@@ -1,0 +1,64 @@
+<%- include('_navbar') -%>
+    
+<div id="register" style="padding: 2.5% 5%;">
+    <div class="form">
+        <div class="mb-3">
+            <label for="username" class="form-label">username</label>
+            <input type="text" class="form-control" id="username">
+        </div>
+        <div class="mb-3">
+            <label for="password" class="form-label">password</label>
+            <input type="password" class="form-control" id="password">
+        </div>
+        <div class="mb-3">
+            <label for="email" class="form-label">email</label>
+            <input type="email" class="form-control" id="email">
+        </div>
+        <div class="mb-3">
+            <label for="fullname" class="form-label">fullname</label>
+            <input type="text" class="form-control" id="fullname">
+        </div>
+        <div class="mb-3">
+            <label for="age" class="form-label">age</label>
+            <input type="number" class="form-control" id="age">
+        </div>
+        <div class="mb-3">
+            <label for="no_hp" class="form-label">no_hp</label>
+            <input type="number" class="form-control" id="no_hp">
+        </div>
+        <div class="mb-3">
+            <button class="btn btn-primary" onclick="RegisterData()">Submit</button>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    const RegisterData = async () => {
+        let formData = {
+            username: document.querySelector('#username').value,
+            password: document.querySelector('#password').value,
+            fullname: document.querySelector('#fullname').value,
+            email: document.querySelector('#email').value,
+            age: document.querySelector('#age').value,
+            no_hp: document.querySelector('#no_hp').value,
+        }
+        let config = { 
+            method: 'POST', body: JSON.stringify(formData), 
+            headers: { 'Content-Type': 'application/json' }
+        }
+        let GetResponse = await fetch('/register', config).then(response => response.json()).catch(err => false)
+
+        if ( !GetResponse ) {
+            alert('failed to register data')
+        } else {
+            if ( GetResponse.statusCode !== 406 ) {
+                alert('successfull to register data')
+                window.location.href = '/login'
+            } else {
+                alert(GetResponse.message)
+            }
+        }
+    }
+</script>
+
+<%- include('_footer') -%>

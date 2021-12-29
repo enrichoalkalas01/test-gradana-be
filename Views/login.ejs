@@ -1,0 +1,45 @@
+<%- include('_navbar') -%>
+    
+<div id="register" style="padding: 2.5% 5%;">
+    <div class="form">
+        <div class="mb-3">
+            <label for="username" class="form-label">username</label>
+            <input type="text" class="form-control" id="username">
+        </div>
+        <div class="mb-3">
+            <label for="password" class="form-label">password</label>
+            <input type="password" class="form-control" id="password">
+        </div>
+        <div class="mb-3">
+            <button class="btn btn-primary" onclick="LoginData()">Login</button>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    const LoginData = async () => {
+        let formData = {
+            username: document.querySelector('#username').value,
+            password: document.querySelector('#password').value,
+        }
+        let config = { 
+            method: 'POST', body: JSON.stringify(formData), 
+            headers: { 'Content-Type': 'application/json' }
+        }
+        let GetResponse = await fetch('/login', config).then(response => response.json()).catch(err => false)
+
+        if ( !GetResponse ) {
+            alert('failed to login data')
+        } else {
+            if ( GetResponse.statusCode !== 406 ) {
+                setCookie('_lgd_sa', JSON.stringify(GetResponse.result), '1D')
+                alert('successfull to login data')
+                window.location.href = '/'
+            } else {
+                alert(GetResponse.message)
+            }
+        }
+    }
+</script>
+
+<%- include('_footer') -%>
