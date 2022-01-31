@@ -31,4 +31,6 @@ App.get('*', (req, res) => {
     res.sendFile(Path.join(__dirname, './angular/dist/angular/index.html'))
 })
 
-
+// setInterval(() => {
+//     console.log(Date())
+// })

@@ -81,7 +81,7 @@ exports.Login = async (req, res) => {
                         fullname: DataUser.fullname
                     },
                     process.env.SecretKey,
-                    { expiresIn: '1h' }
+                    { expiresIn: '1D' }
                 )
             }
 
