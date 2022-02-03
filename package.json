@@ -24,6 +24,7 @@
     "express": "^4.17.2",
     "html-webpack-plugin": "^5.5.0",
     "jsonwebtoken": "^8.5.1",
+    "mini-css-extract-plugin": "^2.5.3",
     "mongodb": "^4.2.2",
     "mongoose": "^6.1.2",
     "morgan": "^1.10.0",
