@@ -32,17 +32,15 @@ exports.TopUp = async (req, res) => {
         if ( !Token ) {
             res.sendStatus(403)
         } else {
-            console.log(Token)
             await ProfileDetailModels.findOne({ 'userId': Token._id }).then(async response => {
-                console.log(response) 
                 const NewHistorySaldo = new HistorySaldoModels({
                     saldoId: response._id,
-                    saldo: req.body.saldo,
+                    saldo: Number(req.body.saldo),
                     tgl_topup: Date(),
                 })
 
                 await NewHistorySaldo.save(NewHistorySaldo).then(result => {
-                    let NewSaldo = Number(response.saldo) + Number(result.saldo)
+                    let NewSaldo = ( Number(req.body.saldo) + Number(response.saldo) )
                     ProfileDetailModels.updateOne(
                         { '_id': response._id },
                         {
